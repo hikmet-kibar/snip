@@ -1,0 +1,2 @@
+# snip
+Manages my templates.
