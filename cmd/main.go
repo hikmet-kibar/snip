@@ -35,6 +35,12 @@ func main() {
 		defaultDir,
 		"Location of snips")
 
+	newCmd := flag.NewFlagSet("new", flag.ExitOnError)
+	newCmdDir := newCmd.String(
+		"directory",
+		defaultDir,
+		"Location of snips")
+
 	// Convert to internal config
 
 	//TODO: too few args provided
@@ -45,6 +51,8 @@ func main() {
 	switch os.Args[1] {
 	case "ls":
 		lsCmd.Parse(os.Args[2:])
+	case "new":
+		newCmd.Parse(os.Args[2:])
 	case "get":
 		getCmd.Parse(os.Args[2:])
 	default:
@@ -68,6 +76,17 @@ func main() {
 		cfg.Directory = *getCmdDir
 		cfg.Snip = getCmd.Arg(0)
 		err := app.Get(cfg)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	}
+
+	// TODO: Replace tilde with HOME in input
+	if newCmd.Parsed() {
+		cfg.Directory = *newCmdDir
+		cfg.Snip = newCmd.Arg(0)
+		err := app.New(cfg)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
