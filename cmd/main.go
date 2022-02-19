@@ -82,7 +82,8 @@ func main() {
 		}
 	}
 
-	// TODO: Replace tilde with HOME in input
+	// TODO:
+	//		- Replace tilde with HOME in input
 	if newCmd.Parsed() {
 		cfg.Directory = *newCmdDir
 		cfg.Snip = newCmd.Arg(0)
